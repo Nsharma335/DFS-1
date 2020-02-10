@@ -1,0 +1,29 @@
+//Time Complexity: O(M*n), where m,n is the number of pixels in the image. We might process every pixel.
+//Space Complexity: O(N), the size of the implicit call stack when calling dfs.
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        if(image==null ) return new int[][]{};
+        //get the current color
+        int currColor=image[sr][sc];
+        //if this is not equal to new color then only do dfs
+        if(currColor!=newColor)
+        dfs(image, sr,sc,newColor,currColor);
+        return image;     
+    }
+     void dfs(int[][] image, int sr, int sc, int newColor,int currColor)
+     {
+         if(sr>=0 && sr<image.length && sc>=0 && sc<image[0].length && image[sr][sc]==currColor)
+         {
+             //we need to check this else it goes to infinite loop
+              image[sr][sc]=newColor;
+                int[][] dirs={{-1,0},{0,-1},{1,0},{0,1}};
+                for(int[] dir: dirs)
+                {
+                    int r=dir[0]+sr;
+                    int c=dir[1]+sc;
+                     // if(r>=0 && r<image.length && c>=0 && c<image[0].length)
+                   dfs(image,r,c,newColor, currColor);
+                }
+         }
+     }
+}
